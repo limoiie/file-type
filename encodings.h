@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include "base.h"
+
 namespace limo_ns {
 
     namespace encoding {
@@ -26,9 +28,7 @@ namespace limo_ns {
             INTERNATIONAL_EBCDIC
         };
 
-//        int check_file_encoding(EFileEncodingType& o_type, const std::string& i_file_name);
-
-        int check_buffer_encoding(EFileEncodingType& o_type, const u_char * i_buffer, size_t i_buffer_size);
+        EFileEncodingType check_buffer_encoding(const u_char * i_buffer, size_t i_buffer_size);
 
     }
 

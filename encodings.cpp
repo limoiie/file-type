@@ -18,30 +18,40 @@ namespace limo_ns {
         static bool looks_utf16_be(const u_char *i_buff, size_t i_buff_size);
         static bool looks_gbk(const u_char *i_buff, size_t i_buff_size);
 
+        static void from_ebcdic(u_char *o_out, const u_char *i_buff, size_t i_buff_size);
 
-        int check_buffer_encoding(EFileEncodingType &o_type, const u_char *i_buff, size_t i_buff_size) {
+
+        EFileEncodingType check_buffer_encoding(const u_char *i_buff, size_t i_buff_size) {
             if (looks_ascii(i_buff, i_buff_size)) {
-                o_type = ASCII;
                 if (looks_utf7(i_buff, i_buff_size))
-                    o_type = UTF7;
+                    return UTF7;
+                return ASCII;
             } else if (looks_utf8_bom(i_buff, i_buff_size)) {
-                o_type = UTF8_BOM;
+                return UTF8_BOM;
             } else if (looks_utf8(i_buff, i_buff_size)) {
-                o_type = UTF8;
+                return UTF8;
             } else if (looks_utf16_le(i_buff, i_buff_size)) {
-                o_type = UTF16_LE;
+                return UTF16_LE;
             } else if (looks_utf16_be(i_buff, i_buff_size)) {
-                o_type = UTF16_BE;
+                return UTF16_BE;
             } else if (looks_latin(i_buff, i_buff_size)) {
-                o_type = ISO8859;
+                return ISO8859;
             } else if (looks_extended(i_buff, i_buff_size)) {
-                o_type = EXTENDED_ASCII;
+                return EXTENDED_ASCII;
             } else if (looks_gbk(i_buff, i_buff_size)) {
-                o_type = GBK;
+                return GBK;
             } else {
-                o_type = BINARY;
+                u_char out[i_buff_size];
+                from_ebcdic(out, i_buff, i_buff_size);
+
+                if (looks_ascii(out, i_buff_size)) {
+                    return EBCDIC;
+                } else if (looks_latin(out, i_buff_size)) {
+                    return INTERNATIONAL_EBCDIC;
+                }
             }
-            return 0;
+
+            return BINARY;
         }
 
 #define F 0   /* character never appears in text */
@@ -71,7 +81,7 @@ namespace limo_ns {
                 I, I, I, I, I, I, I, I, I, I, I, I, I, I, I, I   /* 0xfX */
         };
 
-        bool looks_ascii(const u_char *i_buff, size_t i_buff_size) {
+        bool looks_ascii(const u_char *i_buff, size_t const i_buff_size) {
             for (int i = 0; i < i_buff_size; ++i) {
                 if (text_chars[i_buff[i]] != T)
                     return false;
@@ -79,7 +89,7 @@ namespace limo_ns {
             return true;
         }
 
-        bool looks_latin(const u_char *i_buff, size_t i_buff_size) {
+        bool looks_latin(const u_char *i_buff, size_t const i_buff_size) {
             for (int i = 0; i < i_buff_size; ++i) {
                 auto t = text_chars[i_buff[i]];
                 if (t != T && i != I)
@@ -88,7 +98,7 @@ namespace limo_ns {
             return true;
         }
 
-        bool looks_extended(const u_char *i_buff, size_t i_buff_size) {
+        bool looks_extended(const u_char *i_buff, size_t const i_buff_size) {
             for (int i = 0; i < i_buff_size; ++i) {
                 auto t = text_chars[i_buff[i]];
                 if (t != T && t != I && t != X)
@@ -97,7 +107,7 @@ namespace limo_ns {
             return true;
         }
 
-        bool looks_utf8(const u_char *i_buff, size_t i_buff_size) {
+        bool looks_utf8(const u_char *i_buff, size_t const i_buff_size) {
             bool has_weird_ctrl_char = false;
             for (int i = 0; i < i_buff_size; ++i) {
                 if ((i_buff[i] & static_cast<u_char>(0x80)) == 0) {          // 0xxxxxxx is plain ASCII
@@ -232,6 +242,54 @@ namespace limo_ns {
 #undef T
 #undef I
 #undef X
+
+        /*
+         * This table maps each EBCDIC character to an (8-bit extended) ASCII
+         * character, as specified in the rationale for the dd(1) command in
+         * draft 11.2 (September, 1991) of the POSIX P1003.2 standard.
+         *
+         * Unfortunately it does not seem to correspond exactly to any of the
+         * five variants of EBCDIC documented in IBM's _Enterprise Systems
+         * Architecture/390: Principles of Operation_, SA22-7201-06, Seventh
+         * Edition, July, 1999, pp. I-1 - I-4.
+         *
+         * Fortunately, though, all versions of EBCDIC, including this one, agree
+         * on most of the printing characters that also appear in (7-bit) ASCII.
+         * Of these, only '|', '!', '~', '^', '[', and ']' are in question at all.
+         *
+         * Fortunately too, there is general agreement that codes 0x00 through
+         * 0x3F represent control characters, 0x41 a nonbreaking space, and the
+         * remainder printing characters.
+         *
+         * This is sufficient to allow us to identify EBCDIC text and to distinguish
+         * between old-style and internationalized examples of text.
+         */
+
+        u_char ebcdic_to_ascii[] = {
+                0,   1,   2,   3,   156,   9, 134, 127, 151, 141, 142,  11,  12,  13,  14,  15,
+                16,  17,  18,  19,  157, 133,   8, 135,  24,  25, 146, 143,  28,  29,  30,  31,
+                128, 129, 130, 131, 132,  10,  23,  27, 136, 137, 138, 139, 140,   5,   6,   7,
+                144, 145, 22,  147, 148, 149, 150,   4, 152, 153, 154, 155,  20,  21, 158,  26,
+                ' ', 160, 161, 162, 163, 164, 165, 166, 167, 168, 213, '.', '<', '(', '+', '|',
+                '&', 169, 170, 171, 172, 173, 174, 175, 176, 177, '!', '$', '*', ')', ';', '~',
+                '-', '/', 178, 179, 180, 181, 182, 183, 184, 185, 203, ',', '%', '_', '>', '?',
+                186, 187, 188, 189, 190, 191, 192, 193, 194, '`', ':', '#', '@', '\'','=', '"',
+                195, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 196, 197, 198, 199, 200, 201,
+                202, 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', '^', 204, 205, 206, 207, 208,
+                209, 229, 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 210, 211, 212, '[', 214, 215,
+                216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, ']', 230, 231,
+                '{', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 232, 233, 234, 235, 236, 237,
+                '}', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 238, 239, 240, 241, 242, 243,
+                '\\',159, 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 244, 245, 246, 247, 248, 249,
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 250, 251, 252, 253, 254, 255
+        };
+
+
+        void from_ebcdic(u_char *o_out, const u_char *i_buff, size_t i_buff_size) {
+            for (auto i = 0; i < i_buff_size; ++i) {
+                o_out[i] = ebcdic_to_ascii[i_buff[i]];
+            }
+        }
 
     }
 
