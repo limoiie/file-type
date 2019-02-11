@@ -8,14 +8,15 @@
 
 namespace limo_ns {
 
-class CMagicSet {
-    friend class CMagicSetHelper;
-private:
-    CMagicSet() = default;
+    class CMagicSet {
+        friend class CMagicSetHelper;
 
-public:
+    private:
+        CMagicSet() = default;
 
-};
+    public:
+
+    };
 
 }
 

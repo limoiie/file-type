@@ -8,4 +8,5 @@ add_executable(file_type main.cpp
         CFileChecker.cpp CFileChecker.h
         CMagicSetHelper.cpp CMagicSetHelper.h
         CFileType.cpp CFileType.h
-        encodings.h encodings.cpp test/test-encoding.cpp)
+        encodings.h encodings.cpp test/test-encoding.cpp base.h
+        )
