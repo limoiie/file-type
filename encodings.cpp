@@ -36,10 +36,10 @@ namespace limo_ns {
                 return UTF16_BE;
             } else if (looks_latin(i_buff, i_buff_size)) {
                 return ISO8859;
-            } else if (looks_extended(i_buff, i_buff_size)) {
-                return EXTENDED_ASCII;
             } else if (looks_gbk(i_buff, i_buff_size)) {
                 return GBK;
+            } else if (looks_extended(i_buff, i_buff_size)) {
+                return EXTENDED_ASCII;
             } else {
                 u_char out[i_buff_size];
                 from_ebcdic(out, i_buff, i_buff_size);
