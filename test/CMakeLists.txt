@@ -1,5 +1,7 @@
 add_executable(all_test_cases
         test-encoding.cpp
+        ../encodings.cpp
+        ../encodings.h
         )
 
 target_link_libraries(all_test_cases gtest_main)
