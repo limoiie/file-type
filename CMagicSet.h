@@ -312,6 +312,74 @@ namespace limo_ns {
         char ext[64];		    /* Popular extensions */
     };
 
+#define BIT(A)   (1 << (A))
+#define STRING_COMPACT_WHITESPACE		    BIT(0)
+#define STRING_COMPACT_OPTIONAL_WHITESPACE	BIT(1)
+#define STRING_IGNORE_LOWERCASE			    BIT(2)
+#define STRING_IGNORE_UPPERCASE			    BIT(3)
+#define REGEX_OFFSET_START			BIT(4)
+#define STRING_TEXTTEST				BIT(5)
+#define STRING_BINTEST				BIT(6)
+#define PSTRING_1_BE				BIT(7)
+#define PSTRING_1_LE				BIT(7)
+#define PSTRING_2_BE				BIT(8)
+#define PSTRING_2_LE				BIT(9)
+#define PSTRING_4_BE				BIT(10)
+#define PSTRING_4_LE				BIT(11)
+#define REGEX_LINE_COUNT			BIT(11)
+#define PSTRING_LEN	\
+    (PSTRING_1_BE|PSTRING_2_LE|PSTRING_2_BE|PSTRING_4_LE|PSTRING_4_BE)
+#define PSTRING_LENGTH_INCLUDES_ITSELF		BIT(12)
+#define	STRING_TRIM				BIT(13)
+#define CHAR_COMPACT_WHITESPACE			    'W'
+#define CHAR_COMPACT_OPTIONAL_WHITESPACE	'w'
+#define CHAR_IGNORE_LOWERCASE			    'c'
+#define CHAR_IGNORE_UPPERCASE			    'C'
+#define CHAR_REGEX_OFFSET_START			    's'
+#define CHAR_TEXTTEST				't'
+#define	CHAR_TRIM				    'T'
+#define CHAR_BINTEST				'b'
+#define CHAR_PSTRING_1_BE			'B'
+#define CHAR_PSTRING_1_LE			'B'
+#define CHAR_PSTRING_2_BE			'H'
+#define CHAR_PSTRING_2_LE			'h'
+#define CHAR_PSTRING_4_BE			'L'
+#define CHAR_PSTRING_4_LE			'l'
+#define CHAR_PSTRING_LENGTH_INCLUDES_ITSELF     'J'
+#define STRING_IGNORE_CASE		(STRING_IGNORE_LOWERCASE|STRING_IGNORE_UPPERCASE)
+#define STRING_DEFAULT_RANGE		100
+
+#define	INDIRECT_RELATIVE			BIT(0)
+#define	CHAR_INDIRECT_RELATIVE			'r'
+
+    /* list of magic entries */
+    struct mlist {
+        struct magic *magic;		/* array of magic entries */
+        uint32_t nmagic;		    /* number of entries in array */
+        void *map;			        /* internal resources used by entry */
+        struct mlist *next, *prev;
+    };
+
+#ifdef __cplusplus
+#define CAST(T, b)	static_cast<T>(b)
+#define RCAST(T, b)	reinterpret_cast<T>(b)
+#define CCAST(T, b)	const_cast<T>(b)
+#else
+    #define CAST(T, b)	((T)(b))
+#define RCAST(T, b)	((T)(uintptr_t)(b))
+#define CCAST(T, b)	((T)(uintptr_t)(b))
+#endif
+
+    struct level_info {
+        int32_t off;
+        int got_match;
+#ifdef ENABLE_CONDITIONALS
+        int last_match;
+        int last_cond;	/* used for error checking by parse() */
+#endif
+    };
+
+#define MAGIC_SETS	2
 
     struct SMagicSet {
         struct mlist *mlist[MAGIC_SETS];	/* list of regular entries */
@@ -342,8 +410,7 @@ namespace limo_ns {
             size_t rm_len;		/* match length */
         } search;
 
-        /* FIXME: Make the string dynamically allocated so that e.g.
-           strings matched in files can be longer than MAXstring */
+        /* FIXME: Make the string dynamically allocated so that e.g. strings matched in files can be longer than MAXstring */
         union VALUETYPE ms_value;	/* either number or string */
         uint16_t indir_max;
         uint16_t name_max;
