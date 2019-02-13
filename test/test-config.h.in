@@ -1,0 +1,11 @@
+//
+// Created by limo on 2/13/2019.
+//
+
+#ifndef FILE_TYPE_TEST_CONFIG_H
+#define FILE_TYPE_TEST_CONFIG_H
+
+#define TEST_FOLDER R"(@CMAKE_SOURCE_DIR@/test)"
+#define TEST_RESOURCE_FOLDER TEST_FOLDER R"(/resources)"
+
+#endif

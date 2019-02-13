@@ -3,3 +3,12 @@
 //
 
 #include "CMagicSet.h"
+
+
+namespace limo_ns {
+
+    CMagicSet::CMagicSet(std::shared_ptr<SMagicSet> handle)
+            : handle_(std::move(handle)){
+    }
+
+}

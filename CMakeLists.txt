@@ -57,4 +57,6 @@ add_executable(file_type main.cpp
         CMagicSetHelper.cpp CMagicSetHelper.h
         CFileType.cpp CFileType.h
         encodings.h encodings.cpp base.h
+        SMagicSet.h SMagicSet.cpp
+        magic.h
         )

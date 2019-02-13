@@ -7,23 +7,25 @@
 
 #include <memory>
 #include <list>
-
 #include "CMagicSet.h"
+
 
 namespace limo_ns {
 
-class CMagicSetHelper {
-public:
-    static CMagicSetHelper create();
+    class CMagicSet;
 
-    std::unique_ptr<CMagicSet> load(std::list<std::string> magic_file_list);
+    class CMagicSetHelper {
+    public:
+        static CMagicSetHelper create();
 
-private:
-    void __load_one_file(const std::string &magic_file);
+        std::unique_ptr<CMagicSet> load(std::list<std::string> magic_file_list);
 
-    std::unique_ptr<CMagicSet> mp_magic_set;
+    private:
+        void __load_one_file(const std::string &magic_file);
 
-};
+        std::unique_ptr<CMagicSet> mp_magic_set;
+
+    };
 
 }
 

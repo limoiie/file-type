@@ -5,6 +5,10 @@
 #ifndef FILE_TYPE_CMAGICSET_H
 #define FILE_TYPE_CMAGICSET_H
 
+#include <memory>
+
+#include "SMagicSet.h"
+
 
 namespace limo_ns {
 
@@ -12,9 +16,12 @@ namespace limo_ns {
         friend class CMagicSetHelper;
 
     private:
-        CMagicSet() = default;
+        explicit CMagicSet(std::shared_ptr<SMagicSet> handle);
 
-    public:
+        static std::shared_ptr<SMagicSet> build_handle();
+
+    private:
+        std::shared_ptr<SMagicSet> handle_;
 
     };
 
