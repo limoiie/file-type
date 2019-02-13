@@ -1,3 +1,10 @@
+configure_file (
+        "${PROJECT_SOURCE_DIR}/test/test-config.h.in"
+        "${PROJECT_BINARY_DIR}/test/test-config.h"
+)
+
+include_directories("${PROJECT_BINARY_DIR}/test")
+
 add_executable(all_test_cases
         test-encoding.cpp
         ../encodings.cpp
