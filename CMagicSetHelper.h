@@ -7,6 +7,8 @@
 
 #include <memory>
 #include <list>
+#include "CMagicSet.h"
+
 
 namespace limo_ns {
 
