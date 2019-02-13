@@ -12,18 +12,18 @@
 
 namespace limo_ns {
 
-class CMagicSetHelper {
-public:
-    static CMagicSetHelper create();
+    class CMagicSetHelper {
+    public:
+        static CMagicSetHelper create();
 
-    std::unique_ptr<CMagicSet> load(std::list<std::string> magic_file_list);
+        std::unique_ptr<CMagicSet> load(std::list<std::string> magic_file_list);
 
-private:
-    void __load_one_file(const std::string &magic_file);
+    private:
+        void __load_one_file(const std::string &magic_file);
 
-    std::unique_ptr<CMagicSet> mp_magic_set;
+        std::unique_ptr<CMagicSet> mp_magic_set;
 
-};
+    };
 
 }
 
