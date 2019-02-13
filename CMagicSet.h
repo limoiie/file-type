@@ -44,7 +44,12 @@ namespace limo_ns {
 #ifdef HAVE_INTTYPES_H
 #include <inttypes.h>
 #endif
-#include <regex.h>
+
+// MODIFIED by limo
+//#include <regex.h>
+#include <regex>
+// END
+
 #include <time.h>
 #include <sys/types.h>
 #ifndef WIN32
@@ -66,19 +71,22 @@ namespace limo_ns {
 #define PATHSEP	':'
 #endif
 
-#define private static
+// MODIFIED by limo
+//#define private static
 
-#if HAVE_VISIBILITY && !defined(WIN32)
-    #define public  __attribute__ ((__visibility__("default")))
-#ifndef protected
-#define protected __attribute__ ((__visibility__("hidden")))
-#endif
-#else
-#define public
-#ifndef protected
-#define protected
-#endif
-#endif
+//#if HAVE_VISIBILITY && !defined(WIN32)
+//    #define public  __attribute__ ((__visibility__("default")))
+//#ifndef protected
+//#define protected __attribute__ ((__visibility__("hidden")))
+//#endif
+//#else
+//#define public
+//#ifndef protected
+//#define protected
+//#endif
+//#endif
+// END
+
 
 #ifndef __arraycount
 #define __arraycount(a) (sizeof(a) / sizeof(a[0]))
