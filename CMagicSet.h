@@ -8,14 +8,11 @@
 #include <cstdio>
 #include <cstdint>
 
-
-namespace limo_ns {
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 #ifdef HAVE_STDINT_H
-    #ifndef __STDC_LIMIT_MACROS
+#ifndef __STDC_LIMIT_MACROS
 #define __STDC_LIMIT_MACROS
 #endif
 #ifndef __STDC_FORMAT_MACROS
@@ -38,8 +35,8 @@ namespace limo_ns {
 #include <stdint.h>
 #endif
 
-#include <stdio.h>	/* Include that here, to make sure __P gets defined */
-#include <errno.h>
+#include <cstdio>	/* Include that here, to make sure __P gets defined */
+#include <cerrno>
 #include <fcntl.h>	/* For open and flags */
 #ifdef HAVE_INTTYPES_H
 #include <inttypes.h>
@@ -50,14 +47,18 @@ namespace limo_ns {
 #include <regex>
 // END
 
-#include <time.h>
+#include <ctime>
 #include <sys/types.h>
 #ifndef WIN32
 #include <sys/param.h>
 #endif
 /* Do this here and now, because struct stat gets re-defined on solaris */
 #include <sys/stat.h>
-#include <stdarg.h>
+
+#include <cstdarg>
+
+
+namespace limo_ns {
 
 #define ENABLE_CONDITIONALS
 

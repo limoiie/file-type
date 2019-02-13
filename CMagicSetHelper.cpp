@@ -4,6 +4,7 @@
 
 #include "CMagicSetHelper.h"
 
+#include "CMagicSet.h"
 
 namespace limo_ns {
 
