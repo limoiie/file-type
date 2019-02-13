@@ -120,18 +120,18 @@ namespace limo_ns {
 #ifndef FILE_BYTES_MAX
 #define FILE_BYTES_MAX (1024 * 1024)    /* how much of the file to look at */
 #endif
-#define MAXMAGIS 8192                    /* max entries in any one magic file or directory */
-#define MAXDESC    64                        /* max len of text description/MIME type */
-#define MAXMIME    80                        /* max len of text MIME type */
+#define MAXMAGIS  8192                  /* max entries in any one magic file or directory */
+#define MAXDESC   64                    /* max len of text description/MIME type */
+#define MAXMIME   80                    /* max len of text MIME type */
 #define MAXstring 96                    /* max len of "string" types */
 
-#define MAGICNO            0xF11E041C
+#define MAGICNO          0xF11E041C
 #define VERSIONNO        14
-#define FILE_MAGICSIZE    344
+#define FILE_MAGICSIZE   344
 
-#define    FILE_LOAD        0
-#define FILE_CHECK        1
-#define FILE_COMPILE    2
+#define FILE_LOAD        0
+#define FILE_CHECK       1
+#define FILE_COMPILE     2
 #define FILE_LIST        3
 
     struct buffer {
@@ -162,71 +162,71 @@ namespace limo_ns {
         /* Word 1 */
         uint16_t cont_level;    /* level of ">" */
         uint8_t flag;
-#define INDIR        0x01    /* if '(...)' appears */
-#define OFFADD        0x02    /* if '>&' or '>...(&' appears */
+#define INDIR          0x01    /* if '(...)' appears */
+#define OFFADD         0x02    /* if '>&' or '>...(&' appears */
 #define INDIROFFADD    0x04    /* if '>&(' appears */
-#define UNSIGNED    0x08    /* comparison is unsigned */
+#define UNSIGNED       0x08    /* comparison is unsigned */
 #define NOSPACE        0x10    /* suppress space character before output */
 #define BINTEST        0x20    /* test is for a binary type (set only for top-level tests) */
-#define TEXTTEST    0x40    /* for passing to file_softmagic */
+#define TEXTTEST       0x40    /* for passing to file_softmagic */
 
         uint8_t factor;
 
         /* Word 2 */
-        uint8_t reln;        /* relation (0=eq, '>'=gt, etc) */
+        uint8_t reln;          /* relation (0=eq, '>'=gt, etc) */
         uint8_t vallen;        /* length of string value, if any */
-        uint8_t type;        /* comparison type (FILE_*) */
-        uint8_t in_type;    /* type of indirection */
-#define            FILE_INVALID    0
-#define            FILE_BYTE    1
-#define                FILE_SHORT    2
+        uint8_t type;          /* comparison type (FILE_*) */
+        uint8_t in_type;       /* type of indirection */
+#define                FILE_INVALID    0
+#define                FILE_BYTE       1
+#define                FILE_SHORT      2
 #define                FILE_DEFAULT    3
-#define                FILE_LONG    4
-#define                FILE_STRING    5
-#define                FILE_DATE    6
+#define                FILE_LONG       4
+#define                FILE_STRING     5
+#define                FILE_DATE       6
 #define                FILE_BESHORT    7
-#define                FILE_BELONG    8
-#define                FILE_BEDATE    9
+#define                FILE_BELONG     8
+#define                FILE_BEDATE     9
 #define                FILE_LESHORT    10
-#define                FILE_LELONG    11
-#define                FILE_LEDATE    12
+#define                FILE_LELONG     11
+#define                FILE_LEDATE     12
 #define                FILE_PSTRING    13
-#define                FILE_LDATE    14
+#define                FILE_LDATE      14
 #define                FILE_BELDATE    15
 #define                FILE_LELDATE    16
-#define                FILE_REGEX    17
+#define                FILE_REGEX      17
 #define                FILE_BESTRING16    18
 #define                FILE_LESTRING16    19
-#define                FILE_SEARCH    20
-#define                FILE_MEDATE    21
-#define                FILE_MELDATE    22
-#define                FILE_MELONG    23
-#define                FILE_QUAD    24
-#define                FILE_LEQUAD    25
-#define                FILE_BEQUAD    26
-#define                FILE_QDATE    27
-#define                FILE_LEQDATE    28
-#define                FILE_BEQDATE    29
-#define                FILE_QLDATE    30
+#define                FILE_SEARCH      20
+#define                FILE_MEDATE      21
+#define                FILE_MELDATE     22
+#define                FILE_MELONG      23
+#define                FILE_QUAD        24
+#define                FILE_LEQUAD      25
+#define                FILE_BEQUAD      26
+#define                FILE_QDATE       27
+#define                FILE_LEQDATE     28
+#define                FILE_BEQDATE     29
+#define                FILE_QLDATE      30
 #define                FILE_LEQLDATE    31
 #define                FILE_BEQLDATE    32
-#define                FILE_FLOAT    33
-#define                FILE_BEFLOAT    34
-#define                FILE_LEFLOAT    35
-#define                FILE_DOUBLE    36
+#define                FILE_FLOAT       33
+#define                FILE_BEFLOAT     34
+#define                FILE_LEFLOAT     35
+#define                FILE_DOUBLE      36
 #define                FILE_BEDOUBLE    37
 #define                FILE_LEDOUBLE    38
-#define                FILE_BEID3    39
-#define                FILE_LEID3    40
+#define                FILE_BEID3       39
+#define                FILE_LEID3       40
 #define                FILE_INDIRECT    41
-#define                FILE_QWDATE    42
+#define                FILE_QWDATE      42
 #define                FILE_LEQWDATE    43
 #define                FILE_BEQWDATE    44
-#define                FILE_NAME    45
-#define                FILE_USE    46
-#define                FILE_CLEAR    47
-#define                FILE_DER    48
-#define                FILE_NAMES_SIZE    49 /* size of array to contain all names */
+#define                FILE_NAME        45
+#define                FILE_USE         46
+#define                FILE_CLEAR       47
+#define                FILE_DER         48
+#define                FILE_NAMES_SIZE   49 /* size of array to contain all names */
 
 #define IS_STRING(t) \
     ((t) == FILE_STRING || \
@@ -240,46 +240,46 @@ namespace limo_ns {
      (t) == FILE_USE)
 
 #define FILE_FMT_NONE 0
-#define FILE_FMT_NUM  1 /* "cduxXi" */
-#define FILE_FMT_STR  2 /* "s" */
-#define FILE_FMT_QUAD 3 /* "ll" */
-#define FILE_FMT_FLOAT 4 /* "eEfFgG" */
+#define FILE_FMT_NUM  1   /* "cduxXi" */
+#define FILE_FMT_STR  2   /* "s" */
+#define FILE_FMT_QUAD 3   /* "ll" */
+#define FILE_FMT_FLOAT 4  /* "eEfFgG" */
 #define FILE_FMT_DOUBLE 5 /* "eEfFgG" */
 
         /* Word 3 */
         uint8_t in_op;        /* operator for indirection */
-        uint8_t mask_op;    /* operator for mask */
+        uint8_t mask_op;      /* operator for mask */
 #ifdef ENABLE_CONDITIONALS
-        uint8_t cond;        /* conditional type */
+        uint8_t cond;         /* conditional type */
 #else
         uint8_t dummy;
 #endif
         uint8_t factor_op;
 #define        FILE_FACTOR_OP_PLUS        '+'
-#define        FILE_FACTOR_OP_MINUS    '-'
-#define        FILE_FACTOR_OP_TIMES    '*'
-#define        FILE_FACTOR_OP_DIV        '/'
+#define        FILE_FACTOR_OP_MINUS       '-'
+#define        FILE_FACTOR_OP_TIMES       '*'
+#define        FILE_FACTOR_OP_DIV         '/'
 #define        FILE_FACTOR_OP_NONE        '\0'
 
-#define                FILE_OPS        "&|^+-*/%"
-#define                FILE_OPAND        0
-#define                FILE_OPOR        1
-#define                FILE_OPXOR        2
-#define                FILE_OPADD        3
-#define                FILE_OPMINUS    4
+#define                FILE_OPS           "&|^+-*/%"
+#define                FILE_OPAND         0
+#define                FILE_OPOR          1
+#define                FILE_OPXOR         2
+#define                FILE_OPADD         3
+#define                FILE_OPMINUS       4
 #define                FILE_OPMULTIPLY    5
-#define                FILE_OPDIVIDE    6
-#define                FILE_OPMODULO    7
-#define                FILE_OPS_MASK    0x07 /* mask for above ops */
-#define                FILE_UNUSED_1    0x08
-#define                FILE_UNUSED_2    0x10
-#define                FILE_OPSIGNED    0x20
-#define                FILE_OPINVERSE    0x40
+#define                FILE_OPDIVIDE      6
+#define                FILE_OPMODULO      7
+#define                FILE_OPS_MASK      0x07 /* mask for above ops */
+#define                FILE_UNUSED_1      0x08
+#define                FILE_UNUSED_2      0x10
+#define                FILE_OPSIGNED      0x20
+#define                FILE_OPINVERSE     0x40
 #define                FILE_OPINDIRECT    0x80
 
 #ifdef ENABLE_CONDITIONALS
 #define                COND_NONE    0
-#define                COND_IF        1
+#define                COND_IF      1
 #define                COND_ELIF    2
 #define                COND_ELSE    3
 #endif /* ENABLE_CONDITIONALS */
@@ -287,16 +287,16 @@ namespace limo_ns {
         /* Word 4 */
         int32_t offset;        /* offset to magic number */
         /* Word 5 */
-        int32_t in_offset;    /* offset from indirection */
+        int32_t in_offset;     /* offset from indirection */
         /* Word 6 */
-        uint32_t lineno;    /* line number in magic file */
+        uint32_t lineno;       /* line number in magic file */
         /* Word 7,8 */
         union {
             uint64_t _mask;    /* for use with numeric and date types */
             struct {
                 uint32_t _count;    /* repeat/line count */
                 uint32_t _flags;    /* modifier flags */
-            } _s;        /* for use with string types */
+            } _s;              /* for use with string types */
         } _u;
 #define num_mask _u._mask
 #define str_range _u._s._count
@@ -304,60 +304,60 @@ namespace limo_ns {
         /* Words 9-24 */
         union VALUETYPE value;    /* either number or string */
         /* Words 25-40 */
-        char desc[MAXDESC];        /* description */
+        char desc[MAXDESC];       /* description */
         /* Words 41-60 */
-        char mimetype[MAXMIME]; /* MIME type */
+        char mimetype[MAXMIME];   /* MIME type */
         /* Words 61-62 */
         char apple[8];            /* APPLE CREATOR/TYPE */
         /* Words 63-78 */
-        char ext[64];            /* Popular extensions */
+        char ext[64];             /* Popular extensions */
     };
 
 #define BIT(A)   (1 << (A))
-#define STRING_COMPACT_WHITESPACE            BIT(0)
+#define STRING_COMPACT_WHITESPACE             BIT(0)
 #define STRING_COMPACT_OPTIONAL_WHITESPACE    BIT(1)
-#define STRING_IGNORE_LOWERCASE                BIT(2)
-#define STRING_IGNORE_UPPERCASE                BIT(3)
-#define REGEX_OFFSET_START            BIT(4)
-#define STRING_TEXTTEST                BIT(5)
-#define STRING_BINTEST                BIT(6)
-#define PSTRING_1_BE                BIT(7)
-#define PSTRING_1_LE                BIT(7)
-#define PSTRING_2_BE                BIT(8)
-#define PSTRING_2_LE                BIT(9)
-#define PSTRING_4_BE                BIT(10)
-#define PSTRING_4_LE                BIT(11)
-#define REGEX_LINE_COUNT            BIT(11)
+#define STRING_IGNORE_LOWERCASE               BIT(2)
+#define STRING_IGNORE_UPPERCASE               BIT(3)
+#define REGEX_OFFSET_START                    BIT(4)
+#define STRING_TEXTTEST                       BIT(5)
+#define STRING_BINTEST                        BIT(6)
+#define PSTRING_1_BE                          BIT(7)
+#define PSTRING_1_LE                          BIT(7)
+#define PSTRING_2_BE                          BIT(8)
+#define PSTRING_2_LE                          BIT(9)
+#define PSTRING_4_BE                          BIT(10)
+#define PSTRING_4_LE                          BIT(11)
+#define REGEX_LINE_COUNT                      BIT(11)
 #define PSTRING_LEN    \
     (PSTRING_1_BE|PSTRING_2_LE|PSTRING_2_BE|PSTRING_4_LE|PSTRING_4_BE)
 #define PSTRING_LENGTH_INCLUDES_ITSELF        BIT(12)
-#define    STRING_TRIM                BIT(13)
-#define CHAR_COMPACT_WHITESPACE                'W'
-#define CHAR_COMPACT_OPTIONAL_WHITESPACE    'w'
-#define CHAR_IGNORE_LOWERCASE                'c'
-#define CHAR_IGNORE_UPPERCASE                'C'
-#define CHAR_REGEX_OFFSET_START                's'
-#define CHAR_TEXTTEST                't'
-#define    CHAR_TRIM                    'T'
-#define CHAR_BINTEST                'b'
-#define CHAR_PSTRING_1_BE            'B'
-#define CHAR_PSTRING_1_LE            'B'
-#define CHAR_PSTRING_2_BE            'H'
-#define CHAR_PSTRING_2_LE            'h'
-#define CHAR_PSTRING_4_BE            'L'
-#define CHAR_PSTRING_4_LE            'l'
-#define CHAR_PSTRING_LENGTH_INCLUDES_ITSELF     'J'
+#define STRING_TRIM                           BIT(13)
+#define CHAR_COMPACT_WHITESPACE               'W'
+#define CHAR_COMPACT_OPTIONAL_WHITESPACE      'w'
+#define CHAR_IGNORE_LOWERCASE                 'c'
+#define CHAR_IGNORE_UPPERCASE                 'C'
+#define CHAR_REGEX_OFFSET_START               's'
+#define CHAR_TEXTTEST                         't'
+#define CHAR_TRIM                             'T'
+#define CHAR_BINTEST                          'b'
+#define CHAR_PSTRING_1_BE                     'B'
+#define CHAR_PSTRING_1_LE                     'B'
+#define CHAR_PSTRING_2_BE                     'H'
+#define CHAR_PSTRING_2_LE                     'h'
+#define CHAR_PSTRING_4_BE                     'L'
+#define CHAR_PSTRING_4_LE                     'l'
+#define CHAR_PSTRING_LENGTH_INCLUDES_ITSELF   'J'
 #define STRING_IGNORE_CASE        (STRING_IGNORE_LOWERCASE|STRING_IGNORE_UPPERCASE)
-#define STRING_DEFAULT_RANGE        100
+#define STRING_DEFAULT_RANGE                  100
 
-#define    INDIRECT_RELATIVE            BIT(0)
-#define    CHAR_INDIRECT_RELATIVE            'r'
+#define    INDIRECT_RELATIVE                  BIT(0)
+#define    CHAR_INDIRECT_RELATIVE             'r'
 
     /* list of magic entries */
     struct mlist {
         struct magic *magic;        /* array of magic entries */
         uint32_t nmagic;            /* number of entries in array */
-        void *map;                    /* internal resources used by entry */
+        void *map;                  /* internal resources used by entry */
         struct mlist *next, *prev;
     };
 
@@ -393,15 +393,15 @@ namespace limo_ns {
             struct level_info *li;
         } c;
         struct out {
-            char *buf;        /* Accumulation buffer */
+            char *buf;         /* Accumulation buffer */
             char *pbuf;        /* Printable buffer */
         } o;
-        uint32_t offset;        /* a copy of m->offset while we */
+        uint32_t offset;         /* a copy of m->offset while we */
         /* are working on the magic entry */
         uint32_t eoffset;        /* offset from end of file */
         int error;
-        int flags;                /* Control magic tests. */
-        int event_flags;        /* Note things that happened. */
+        int flags;               /* Control magic tests. */
+        int event_flags;         /* Note things that happened. */
 #define        EVENT_HAD_ERR        0x01
         const char *file;
         size_t line;            /* current magic line number */
@@ -410,7 +410,7 @@ namespace limo_ns {
         /* data for searches */
         struct {
             const char *s;        /* start of search in original source */
-            size_t s_len;        /* length of search region */
+            size_t s_len;         /* length of search region */
             size_t offset;        /* starting offset in source: XXX - should this be off_t? */
             size_t rm_len;        /* match length */
         } search;
@@ -425,7 +425,7 @@ namespace limo_ns {
         uint16_t regex_max;
         size_t bytes_max;        /* number of bytes to read from file */
 #define    FILE_INDIR_MAX            50
-#define    FILE_NAME_MAX            30
+#define    FILE_NAME_MAX             30
 #define    FILE_ELF_SHNUM_MAX        32768
 #define    FILE_ELF_PHNUM_MAX        2048
 #define    FILE_ELF_NOTES_MAX        256
