@@ -7,21 +7,49 @@
 
 #include <memory>
 
-#include "SMagicSet.h"
+#include "magic_set.h"
+#include "magic.h"
+#include "HandleWrapper.h"
 
 
 namespace limo_ns {
 
-    class CMagicSet {
+    struct magic_map;
+
+    class CMList : public HandleWrapper<mlist> {
+    public:
+        explicit CMList(mlist *handle);
+
+        static mlist *alloc_mlist();
+        static void free_mlist_node(mlist *p_mlist);
+        static void free_mlist(mlist *p_mlist);
+
+        bool insert_front(magic_map *map, size_t idx);
+
+    };
+
+    class CMagicSet : public HandleWrapper<magic_set> {
         friend class CMagicSetHelper;
 
     private:
-        explicit CMagicSet(std::shared_ptr<SMagicSet> handle);
+        explicit CMagicSet(magic_set *handle);
 
-        static std::shared_ptr<SMagicSet> build_handle();
+        void realloc_mlist();
+        bool check_buffer(magic_map *mgc_map, std::string const& magic_file);
+        std::string find_magic_file(std::string const& magic_file);
+        bool try_map_magic_file(std::string const& magic_file);
+        bool try_parse_magic_file(std::string const& magic_file);
 
-    private:
-        std::shared_ptr<SMagicSet> handle_;
+    public:
+        static magic_set *alloc_magic_set();
+        static void free_magic_set(magic_set *p_magic_set);
+
+        void reset();
+        bool set_flags(int flags);
+        bool list(std::string const& magic_file);
+
+        bool load_magic_file(std::string const& magic_file);
+        bool is_loaded();
 
     };
 

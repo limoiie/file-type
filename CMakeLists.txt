@@ -49,6 +49,8 @@ add_definitions(
         -DGTEST_DONT_DEFINE_TEST=1
 )
 
+include_directories("third-part/include")
+
 add_subdirectory(test)
 
 add_executable(file_type main.cpp
@@ -57,6 +59,6 @@ add_executable(file_type main.cpp
         CMagicSetHelper.cpp CMagicSetHelper.h
         CFileType.cpp CFileType.h
         encodings.h encodings.cpp base.h
-        SMagicSet.h SMagicSet.cpp
+        magic_set.h magic_set.cpp
         magic.h
-        )
+        HandleWrapper.h type_table.cpp type_table.h logger.h logger.cpp utils/string_utils.h utils/file_utils.h)

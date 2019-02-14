@@ -386,7 +386,7 @@ namespace limo_ns {
      * @brief You should operate instances of this class by CMagicSet
      * instead of operating directly
      */
-    struct SMagicSet {
+    struct magic_set {
         struct mlist *mlist[MAGIC_SETS];    /* list of regular entries */
         struct cont {
             size_t len;
@@ -433,9 +433,16 @@ namespace limo_ns {
     };
 
 
-    SMagicSet *create_magic_set();
+#if defined(HAVE_MMAP) && defined(HAVE_SYS_MMAN_H) && !defined(QUICK)
+#define QUICK
+#endif
 
-    bool magic_set_set_flags(int flags);
+#ifndef O_BINARY
+#define O_BINARY	0
+#endif
+#ifndef O_NONBLOCK
+#define O_NONBLOCK	0
+#endif
 
 }
 
